@@ -119,7 +119,7 @@ public class TheOne {
 		// 将存储好测试用例的document对象写入XML文件
 		OutputFormat format = OutputFormat.createPrettyPrint();
 		XMLWriter writer = new XMLWriter(new FileOutputStream(
-				"E:/Markov/bilibili/tcs.xml"), format);
+				"E:/Markov/tcs.xml"), format);
 		writer.write(dom);
 		writer.close();
 

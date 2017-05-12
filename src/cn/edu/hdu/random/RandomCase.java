@@ -59,6 +59,8 @@ public class RandomCase {
 						+ stimulate.getAssignValue() + "]" + "→→";
 
 				Element process = tc.addElement("process");
+				process.addElement("conditions").setText(
+						stimulate.getConditions());
 				process.addElement("operation").setText(stimulate.getName());
 				if (str.equals("")) { // 没有输入参数的情况
 					process.addElement("input").setText("null");

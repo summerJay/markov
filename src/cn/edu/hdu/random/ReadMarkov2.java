@@ -36,7 +36,7 @@ public class ReadMarkov2 {
 		// Document dom = reader.read("telephone_extend_2.xml");
 		// Document dom = reader.read("telephone_nocircle.xml");
 		// Document dom = reader.read("NewMarkov.xml");
-		Document dom = reader.read("Software_MarkovChainModel1.xml");
+		Document dom = reader.read("Software_MarkovChainModel7.xml");
 		// Document dom = reader.read("su.xml");
 		return dom;
 	}
