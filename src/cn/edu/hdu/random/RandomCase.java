@@ -79,8 +79,8 @@ public class RandomCase {
 						+ stimulate.getAssignValue() + "]";
 
 				Element process = tc.addElement("process");
-				// process.addElement("conditions").setText(
-				// stimulate.getConditions());
+				process.addElement("conditions").setText(
+						stimulate.getConditions());
 				process.addElement("operation").setText(stimulate.getName());
 				if (str.equals("")) {
 					process.addElement("input").setText("null");

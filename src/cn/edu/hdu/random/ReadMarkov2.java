@@ -92,7 +92,7 @@ public class ReadMarkov2 {
 				Element probability = arc.element("prob");
 				Element assignValue = arc.element("assignValue");
 				Element assignType = arc.element("assignType");
-				// Element conditions = arc.element("conditions");
+				Element conditions = arc.element("conditions");
 				// 每遍历到一个出迁移，就创建一个迁移对象，并将从xml中读到的值赋值给其相应变量
 				Transition t = new Transition();
 				t.setName(arcName.getText().trim());
@@ -110,7 +110,7 @@ public class ReadMarkov2 {
 				}
 
 				// 设置测试所需各种条件
-				// t.setConditions(conditions.getTextTrim());
+				t.setConditions(conditions.getTextTrim());
 
 				// 封装transition上的激励stimulate，并赋值给transition上面的stimulate属性
 				Stimulate stimulate = new Stimulate();
@@ -121,7 +121,7 @@ public class ReadMarkov2 {
 				if (assignType != null) {
 					stimulate.setAssignType(assignType.getText());
 				}
-				// stimulate.setConditions(conditions.getTextTrim());
+				stimulate.setConditions(conditions.getTextTrim());
 				// 先封装stimulate上面的参数集合属性
 				List<Parameter> parameters = new ArrayList<Parameter>();// 存储每个迁移上的激励中的参数
 				// 再封装stimulate上的参数间约束表达式集合
