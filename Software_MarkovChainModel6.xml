@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model version="1.0" type="uml:Model" name="Markov_Model" visibility="public" authorNmae="Terence">
+  <ModelType>Software_Markov</ModelType>
+  <Owned>Software_Itself</Owned>
+  <name>Software_MarkovChainModel</name>
+  <state label="initial">
+    <name>Q0</name>
+    <arc label="prob" type="void">
+      <name>Q0_S0</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S0</to>
+    </arc>
+  </state>
+  <state>
+    <name>S0</name>
+    <arc label="prob" type="common">
+      <name>S0_S1_update_batt_compass()</name>
+      <owned>update_batt_compass</owned>
+      <prob>1.0</prob>
+      <to>S1</to>
+    </arc>
+  </state>
+  <state>
+    <name>S1</name>
+    <arc label="prob" type="common">
+      <name>S1_S2_get_control_mode()</name>
+      <owned>get_control_mode</owned>
+      <assignValue>_control_mode</assignValue>
+      <assignType>int</assignType>
+      <prob>1.0</prob>
+      <to>S2</to>
+    </arc>
+  </state>
+  <state>
+    <name>S2</name>
+    <arc label="prob" type="common">
+      <name>S2_S3_armed()</name>
+      <owned>armed</owned>
+      <assignValue>_motors_armed</assignValue>
+      <assignType>bool</assignType>
+      <prob>1.0</prob>
+      <to>S3</to>
+    </arc>
+  </state>
+  <state>
+    <name>S3</name>
+    <arc label="prob" type="common">
+      <name>S3_S4_read_battery()</name>
+      <owned>read_battery</owned>
+      <prob>1.0</prob>
+      <to>S4</to>
+    </arc>
+  </state>
+  <state>
+    <name>S4</name>
+    <arc label="prob" type="common">
+      <name>S4_S5_read()</name>
+      <owned>read</owned>
+      <prob>1.0</prob>
+      <to>S5</to>
+    </arc>
+  </state>
+  <state>
+    <name>S5</name>
+    <arc label="prob" type="common">
+      <name>S5_S6_has_current()</name>
+      <owned>has_current</owned>
+      <assignValue>has_current</assignValue>
+      <assignType>bool</assignType>
+      <prob>1.0</prob>
+      <to>S6</to>
+    </arc>
+  </state>
+  <state>
+    <name>S6</name>
+    <arc label="prob" type="common">
+      <name>S6_S7_current_amps()</name>
+      <owned>current_amps</owned>
+      <assignValue>cur_amps</assignValue>
+      <assignType>float</assignType>
+      <prob>1.0</prob>
+      <to>S7</to>
+    </arc>
+  </state>
+  <state>
+    <name>S7</name>
+    <arc label="prob" type="common">
+      <name>S7_S8_set_current(float)</name>
+      <owned>set_current</owned>
+      <prob>1.0</prob>
+      <stimulate>
+        <parameter>
+          <paramName>cur_amps</paramName>
+          <paramType>float</paramType>
+          <domain type="serial">0&lt;cur_amps&lt;5000</domain>
+        </parameter>
+      </stimulate>
+      <to>S8</to>
+    </arc>
+  </state>
+  <state>
+    <name>S8</name>
+    <arc label="prob" type="void">
+      <name>S8_S9</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S9</to>
+    </arc>
+  </state>
+  <state>
+    <name>S9</name>
+    <arc label="prob" type="common">
+      <name>S9_S10_get_type()</name>
+      <owned>get_type</owned>
+      <assignValue>batt_type</assignValue>
+      <assignType>int</assignType>
+      <prob>1.0</prob>
+      <to>S10</to>
+    </arc>
+  </state>
+  <state>
+    <name>S10</name>
+    <arc label="prob" type="common">
+      <name>S10_S11_voltage()</name>
+      <owned>voltage</owned>
+      <assignValue>batt_vol</assignValue>
+      <assignType>float</assignType>
+      <prob>1.0</prob>
+      <to>S11</to>
+    </arc>
+  </state>
+  <state>
+    <name>S11</name>
+    <arc label="prob" type="common">
+      <name>S11_S12_set_voltage(float)</name>
+      <owned>set_voltage</owned>
+      <prob>1.0</prob>
+      <stimulate>
+        <parameter>
+          <paramName>batt_vol</paramName>
+          <paramType>float</paramType>
+          <domain type="serial">0&lt;batt_vol&lt;5000</domain>
+        </parameter>
+      </stimulate>
+      <to>S12</to>
+    </arc>
+  </state>
+  <state>
+    <name>S12</name>
+    <arc label="prob" type="void">
+      <name>S12_S13</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S13</to>
+    </arc>
+  </state>
+  <state>
+    <name>S13</name>
+    <arc label="prob" type="common">
+      <name>S13_S14_current_amps()</name>
+      <owned>current_amps</owned>
+      <assignValue>cur_amps</assignValue>
+      <assignType>float</assignType>
+      <prob>1.0</prob>
+      <to>S14</to>
+    </arc>
+  </state>
+  <state>
+    <name>S14</name>
+    <arc label="prob" type="common">
+      <name>S14_S15_set_current(float)</name>
+      <owned>set_current</owned>
+      <prob>1.0</prob>
+      <stimulate>
+        <parameter>
+          <paramName>cur_amps</paramName>
+          <paramType>float</paramType>
+          <domain type="serial">0&lt;cur_amps&lt;5000</domain>
+        </parameter>
+      </stimulate>
+      <to>S15</to>
+    </arc>
+  </state>
+  <state>
+    <name>S15</name>
+    <arc label="prob" type="void">
+      <name>S15_S16</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S16</to>
+    </arc>
+  </state>
+  <state>
+    <name>S16</name>
+    <arc label="prob" type="common">
+      <name>S16_S17_exhausted(float, float)</name>
+      <owned>exhausted</owned>
+      <assignValue>has_exhausted</assignValue>
+      <prob>1.0</prob>
+      <stimulate>
+        <parameter>
+          <paramName>g.fs_batt_voltage</paramName>
+          <paramType>float</paramType>
+          <domain type="serial">0&lt;g.fs_batt_voltage&lt;5000</domain>
+        </parameter>
+        <parameter>
+          <paramName>g.fs_batt_mah</paramName>
+          <paramType>float</paramType>
+          <domain type="serial">0&lt;g.fs_batt_mah&lt;5000</domain>
+        </parameter>
+      </stimulate>
+      <to>S17</to>
+    </arc>
+  </state>
+  <state>
+    <name>S17</name>
+    <arc label="prob" type="common">
+      <name>S17_S18_get_mode()</name>
+      <owned>get_mode</owned>
+      <assignValue>_control_mode</assignValue>
+      <assignType>int</assignType>
+      <prob>1.0</prob>
+      <to>S18</to>
+    </arc>
+  </state>
+  <state>
+    <name>S18</name>
+    <arc label="prob" type="common">
+      <name>S18_S19_get_throttle()</name>
+      <owned>get_throttle</owned>
+      <assignValue>get_throttle</assignValue>
+      <assignType>float</assignType>
+      <prob>1.0</prob>
+      <to>S19</to>
+    </arc>
+  </state>
+  <state>
+    <name>S19</name>
+    <arc label="prob" type="common">
+      <name>S19_S20_set_throttle(float)</name>
+      <owned>set_throttle</owned>
+      <prob>1.0</prob>
+      <stimulate>
+        <parameter>
+          <paramName>get_throttle/1000.0</paramName>
+          <paramType>float</paramType>
+        </parameter>
+      </stimulate>
+      <to>S20</to>
+    </arc>
+  </state>
+  <state>
+    <name>S20</name>
+    <arc label="prob" type="common">
+      <name>S20_S21_read()</name>
+      <owned>read</owned>
+      <assignValue>compass_read</assignValue>
+      <assignType>bool</assignType>
+      <prob>1.0</prob>
+      <to>S21</to>
+    </arc>
+  </state>
+  <state>
+    <name>S21</name>
+    <arc label="prob" type="void">
+      <name>S21_S22</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S22</to>
+    </arc>
+  </state>
+  <state>
+    <name>S22</name>
+    <arc label="prob" type="void">
+      <name>S22_S23</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>Exit</to>
+    </arc>
+  </state>
+  <state label="final">
+    <name>Exit</name>
+  </state>
+</Model>
