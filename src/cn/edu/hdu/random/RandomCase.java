@@ -60,11 +60,11 @@ public class RandomCase {
 
 				Element process = tc.addElement("process");
 				Stimulate nextStimulate = oneCaseExtend.get(i + 1);
-				process.addElement("conditions").setText(
-						nextStimulate.getConditions());
+				// process.addElement("conditions").setText(
+				// nextStimulate.getConditions());
 				process.addElement("operation").setText(stimulate.getName());
 				if (str.equals("")) { // 没有输入参数的情况
-				// process.addElement("input").setText("null");
+					// process.addElement("input").setText("null");
 					process.addElement("input").setText(
 							nextStimulate.getConditions());
 				} else {
