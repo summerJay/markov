@@ -59,14 +59,20 @@ public class RandomCase {
 						+ stimulate.getAssignValue() + "]" + "→→";
 
 				Element process = tc.addElement("process");
+				Stimulate nextStimulate = oneCaseExtend.get(i + 1);
 				process.addElement("conditions").setText(
-						stimulate.getConditions());
+						nextStimulate.getConditions());
 				process.addElement("operation").setText(stimulate.getName());
 				if (str.equals("")) { // 没有输入参数的情况
-					process.addElement("input").setText("null");
-				} else {
+				// process.addElement("input").setText("null");
 					process.addElement("input").setText(
-							str.substring(1, str.length() - 1));
+							nextStimulate.getConditions());
+				} else {
+					String inputContent = str.substring(1, str.length() - 1);
+					if (!nextStimulate.getConditions().equals("")) {
+						inputContent += ("," + nextStimulate.getConditions());
+					}
+					process.addElement("input").setText(inputContent);
 				}
 				if (stimulate.getAssignType() != null) {
 					process.addElement("assignType").setText(
@@ -81,8 +87,8 @@ public class RandomCase {
 						+ stimulate.getAssignValue() + "]";
 
 				Element process = tc.addElement("process");
-				process.addElement("conditions").setText(
-						stimulate.getConditions());
+				// process.addElement("conditions").setText(
+				// stimulate.getConditions());
 				process.addElement("operation").setText(stimulate.getName());
 				if (str.equals("")) {
 					process.addElement("input").setText("null");
