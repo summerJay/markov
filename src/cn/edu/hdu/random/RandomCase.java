@@ -64,13 +64,20 @@ public class RandomCase {
 				// nextStimulate.getConditions());
 				process.addElement("operation").setText(stimulate.getName());
 				if (str.equals("")) { // 没有输入参数的情况
-					// process.addElement("input").setText("null");
-					process.addElement("input").setText(
-							nextStimulate.getConditions());
+
+					if (!nextStimulate.getConditions().equals("")) {
+						process.addElement("input").setText(
+								nextStimulate.getConditions().replaceAll("==",
+										"="));
+					} else {
+						process.addElement("input").setText("null");
+					}
+
 				} else {
 					String inputContent = str.substring(1, str.length() - 1);
 					if (!nextStimulate.getConditions().equals("")) {
-						inputContent += ("," + nextStimulate.getConditions());
+						inputContent += ("," + nextStimulate.getConditions()
+								.replaceAll("==", "="));
 					}
 					process.addElement("input").setText(inputContent);
 				}
