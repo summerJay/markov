@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model version="1.0" type="uml:Model" name="Markov_Model" visibility="public" authorNmae="Terence">
+  <ModelType>Software_Markov</ModelType>
+  <Owned>Software_Itself</Owned>
+  <name>Software_MarkovChainModel</name>
+  <state label="initial">
+    <name>Q0</name>
+    <arc label="prob" type="void">
+      <name>Q0_S0</name>
+      <conditions></conditions>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S0</to>
+    </arc>
+  </state>
+  <state>
+    <name>S0</name>
+    <arc label="prob" type="common">
+      <name>S0_S1_peopleComing()</name>
+      <conditions></conditions>
+      <owned>peopleComing</owned>
+      <prob>1.0</prob>
+      <to>S1</to>
+    </arc>
+  </state>
+  <state>
+    <name>S1</name>
+    <arc label="prob" type="common">
+      <name>S1_S2_newPeople()</name>
+      <conditions></conditions>
+      <owned>newPeople</owned>
+      <prob>1.0</prob>
+      <to>S2</to>
+    </arc>
+  </state>
+  <state>
+    <name>S2</name>
+    <arc label="prob" type="common">
+      <name>S2_S3_pushCallUp(int)</name>
+      <conditions></conditions>
+      <owned>pushCallUp</owned>
+      <prob>1.0</prob>
+      <stimulate>
+        <parameter>
+          <paramName>floor</paramName>
+          <paramType>int</paramType>
+          <domain type="serial">1&lt;floor&lt;5</domain>
+        </parameter>
+      </stimulate>
+      <to>S3</to>
+    </arc>
+  </state>
+  <state>
+    <name>S3</name>
+    <arc label="prob" type="common">
+      <name>S3_S4_response()</name>
+      <conditions></conditions>
+      <owned>response</owned>
+      <prob>1.0</prob>
+      <to>S4</to>
+    </arc>
+  </state>
+  <state>
+    <name>S4</name>
+    <arc label="prob" type="common">
+      <name>S4_S5_controller()</name>
+      <conditions>State==idle,Floor==1</conditions>
+      <owned>controller</owned>
+      <prob>1.0</prob>
+      <to>S5</to>
+    </arc>
+  </state>
+  <state label="timeDelay">
+    <name>S5</name>
+    <time>0,0.25</time>
+    <arc label="prob" type="common">
+      <name>S5_S6_open()</name>
+      <conditions>State==idle,Floor==1,State==idle,callUp[1] != 0 || callDown[1] != 0 || callCar[1] != 0</conditions>
+      <owned>open</owned>
+      <prob>1.0</prob>
+      <to>S6</to>
+    </arc>
+  </state>
+  <state label="timeDelay">
+    <name>S6</name>
+    <time>0,0.25</time>
+    <arc label="prob" type="common">
+      <name>S6_S7_open_return9()</name>
+      <prob>1.0</prob>
+      <conditions>State==idle,Floor==1,State==idle,callUp[1] != 0 || callDown[1] != 0 || callCar[1] != 0</conditions>
+      <owned>open_return9</owned>
+      <to>S7</to>
+    </arc>
+  </state>
+  <state>
+    <name>S7</name>
+    <arc label="prob" type="void">
+      <name>S7_S8</name>
+      <conditions></conditions>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S8</to>
+    </arc>
+  </state>
+  <state>
+    <name>S8</name>
+    <arc label="prob" type="void">
+      <name>S8_S9</name>
+      <conditions></conditions>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S9</to>
+    </arc>
+  </state>
+  <state>
+    <name>S9</name>
+    <arc label="prob" type="void">
+      <name>S9_S10</name>
+      <conditions></conditions>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S10</to>
+    </arc>
+  </state>
+  <state label="timeDelay">
+    <name>S10</name>
+    <time>0,0.3</time>
+    <arc label="prob" type="common">
+      <name>S10_S11_peopleOutIn()</name>
+      <conditions></conditions>
+      <owned>peopleOutIn</owned>
+      <prob>1.0</prob>
+      <to>S11</to>
+    </arc>
+  </state>
+  <state>
+    <name>S11</name>
+    <arc label="prob" type="common">
+      <name>S11_S12_thisFloorPeopleOut()</name>
+      <conditions>elevator-&gt;thisFloorOut() == true</conditions>
+      <owned>thisFloorPeopleOut</owned>
+      <prob>1.0</prob>
+      <to>S12</to>
+    </arc>
+  </state>
+  <state label="timeDelay">
+    <name>S12</name>
+    <time>0,0.3</time>
+    <arc label="prob" type="common">
+      <name>S12_S13_thisFloorPeopleOut_return()</name>
+      <conditions>elevator-&gt;thisFloorOut() == true</conditions>
+      <owned>thisFloorPeopleOut_return</owned>
+      <prob>1.0</prob>
+      <to>S13</to>
+    </arc>
+  </state>
+  <state>
+    <name>S13</name>
+    <arc label="prob" type="void">
+      <name>S13_S14</name>
+      <conditions></conditions>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S14</to>
+    </arc>
+  </state>
+  <state>
+    <name>S14</name>
+    <arc label="prob" type="void">
+      <name>S14_S11</name>
+      <conditions></conditions>
+      <owned>null</owned>
+      <prob>0.5</prob>
+      <to>S11</to>
+    </arc>
+    <arc label="prob" type="common">
+      <name>S14_S15_thisFloorPeopleIn()</name>
+      <conditions>buildingQueue[getCurrentFloor]-&gt;empty() == false</conditions>
+      <owned>thisFloorPeopleIn</owned>
+      <prob>0.5</prob>
+      <to>S15</to>
+    </arc>
+  </state>
+  <state label="timeDelay">
+    <name>S15</name>
+    <time>0,0.30</time>
+    <arc label="prob" type="common">
+      <name>S15_S16_thisFloorPeopleIn_return()</name>
+      <conditions>buildingQueue[getCurrentFloor]-&gt;empty() == false</conditions>
+      <owned>thisFloorPeopleIn_return</owned>
+      <prob>1.0</prob>
+      <to>S16</to>
+    </arc>
+  </state>
+  <state>
+    <name>S16</name>
+    <arc label="prob" type="void">
+      <name>S16_S17</name>
+      <conditions></conditions>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S17</to>
+    </arc>
+  </state>
+  <state>
+    <name>S17</name>
+    <arc label="prob" type="void">
+      <name>S17_S14</name>
+      <conditions></conditions>
+      <owned>null</owned>
+      <prob>0.5</prob>
+      <to>S14</to>
+    </arc>
+    <arc label="prob" type="common">
+      <name>S17_S18_close()</name>
+      <conditions></conditions>
+      <owned>close</owned>
+      <prob>0.5</prob>
+      <to>S18</to>
+    </arc>
+  </state>
+  <state label="timeDelay">
+    <name>S18</name>
+    <time>0,0.25</time>
+    <arc label="prob" type="common">
+      <name>S18_S19_close_return()</name>
+      <conditions></conditions>
+      <owned>close_return</owned>
+      <prob>1.0</prob>
+      <to>S19</to>
+    </arc>
+  </state>
+  <state>
+    <name>S19</name>
+    <arc label="prob" type="common">
+      <name>S19_S20_prepareMove()</name>
+      <conditions></conditions>
+      <owned>prepareMove</owned>
+      <prob>1.0</prob>
+      <to>S20</to>
+    </arc>
+  </state>
+  <state label="timeDelay">
+    <name>S20</name>
+    <time>0,0.15</time>
+    <arc label="prob" type="common">
+      <name>S20_S21_goUpstairs()</name>
+      <conditions></conditions>
+      <owned>goUpstairs</owned>
+      <prob>1.0</prob>
+      <to>S21</to>
+    </arc>
+  </state>
+  <state>
+    <name>S21</name>
+    <arc label="prob" type="void">
+      <name>S21_S22</name>
+      <conditions></conditions>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>Exit</to>
+    </arc>
+  </state>
+  <state label="final">
+    <name>Exit</name>
+  </state>
+</Model>

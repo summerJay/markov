@@ -37,8 +37,11 @@ public class Stimulate {
 
 	@Override
 	public String toString() {
-		return "[" + name + "," + parameters.toString() + ","
-				+ constraints.toString() + "]";
+		return "[" + name + "," + parameters.toString() + /*
+														 * "," +
+														 * constraints.toString
+														 * () +
+														 */"]";
 	}
 
 	public String getAssignType() {

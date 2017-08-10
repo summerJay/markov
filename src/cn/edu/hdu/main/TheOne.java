@@ -24,7 +24,7 @@ import cn.edu.hdu.random.ReadMarkov2;
 import cn.edu.hdu.utils.Constant;
 
 /**
- * 项目的主函数所在类，包括获取file文件对象和判断markov链对象是否还有未被遍历过的迁移。
+ * 项目的主函数所在类，包括获取filees文件对象和判断markov链对象是否还有未被遍历过的迁移。
  * 
  * @author YJ
  * @version 1.0
@@ -51,7 +51,7 @@ public class TheOne {
 			System.out.println("请输入你想要生成的测试用例个数,并且不低于满足当前充分性指标的最低测试用例个数" + min
 					+ "：");
 			int N;
-			while ((N = s.nextInt()) < min) {
+			while ((N = s.nextInt()) < 0) {
 				System.out.println("当前输入的测试用例个数不满足要求，请重新输入：");
 			}
 			markov.setTcNumber(N);
@@ -93,10 +93,12 @@ public class TheOne {
 
 					sufficiency = isSufficient(markov);
 				}
+				// 迁移或者状态覆盖百分百
 
 				if (!sufficiency) {
 					continue;
 				}
+
 				flag = false;
 				// similarity = CalculateSimilarity.statistic_1(markov);
 				similarity = CalculateSimilarity.statistic(markov, PI);
@@ -107,7 +109,7 @@ public class TheOne {
 				System.out.println("\n当前生成的测试用例和测试路径的个数:" + numberOfTestCases
 						+ "\n\n");
 
-			} while (similarity > 0.001);
+			} while (similarity > 0.1);
 
 			// WriteTestCases.writeCases(gc.getTestCases());
 			// 打印所有状态节点的平稳分布值
@@ -167,6 +169,9 @@ public class TheOne {
 			for (Transition outTransition : state.getOutTransitions()) {
 
 				if (outTransition.getAccessTimes() == 0) {
+					System.out.println("未访问的迁移：stateName:"
+							+ state.getStateName() + "   outTransition:"
+							+ outTransition.getName());
 					return false;
 				}
 			}

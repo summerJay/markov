@@ -36,8 +36,8 @@ public class ReadMarkov2 {
 		// Document dom = reader.read("telephone_extend_2.xml");
 		// Document dom = reader.read("telephone_nocircle.xml");
 		// Document dom = reader.read("NewMarkov.xml");
-		Document dom = reader.read("Software_MarkovChainModel16.xml");
-		// Document dom = reader.read("su.xml");
+		// Document dom = reader.read("Software_MarkovChainModel1.xml");
+		Document dom = reader.read("su3.xml");
 		return dom;
 	}
 
@@ -96,8 +96,14 @@ public class ReadMarkov2 {
 				// 每遍历到一个出迁移，就创建一个迁移对象，并将从xml中读到的值赋值给其相应变量
 				Transition t = new Transition();
 				t.setName(arcName.getText().trim());
+				if (t.getName().equals("")) {
+					throw new RuntimeException("状态" + headState.getStateName()
+							+ "下的owned标签内容为空不符要求");
+				}
 				t.setProbability(Double.parseDouble(probability.getText()));
-
+				// 打印每条迁移的概率
+				System.out.println("状态" + headState.getStateName() + "的迁移"
+						+ t.getName() + "的概率为：" + t.getProbability());
 				outTransProb += t.getProbability();// 出迁移总概率
 
 				t.setAccessTimes(0);
@@ -180,10 +186,17 @@ public class ReadMarkov2 {
 				outTransitions.add(t); // 将当前封装的出迁移存入出迁移集合
 				transitions.add(t); // 将当前封装的迁移存入总迁移集合
 			}
-
-			System.out.println("状态节点" + headState.getStateName() + "的出迁移概率和为："
-					+ outTransProb);
-
+			// 打印出迁移概率和
+			// System.out.println("状态节点" + headState.getStateName() +
+			// "的出迁移概率和为："
+			// + outTransProb);
+			if (outTransProb < 0.9 && !headState.getStateName().equals("Exit")) {
+				throw new RuntimeException("状态节点" + headState.getStateName()
+						+ "的出迁移概率和为" + outTransProb + "小于1");
+			} else if (outTransProb > 1.1) {
+				throw new RuntimeException("状态节点" + headState.getStateName()
+						+ "的出迁移概率和为" + outTransProb + "大于1");
+			}
 			headState.setOutTransitions(outTransitions); // 将出迁移集合赋值给当前的状态节点的出迁移集合对象
 			// System.out.println("第"+i+"个头结点有"+outTransitions.size());
 			// outTransitions.clear();不能用clear 已经赋值的状态节点的出迁移集合又会变成null
