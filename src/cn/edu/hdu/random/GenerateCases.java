@@ -24,8 +24,9 @@ public class GenerateCases {
 	private static final int COEFFICIENT = 8; // 设置一个常量系数
 	private int oneBatchSize; // 生成的每一批的测试用例个数
 	private List<List<Integer>> testPaths = new ArrayList<List<Integer>>(); // 测试路径集合
-	private List<List<String>> testCases = new ArrayList<List<String>>(); // 测试用例集合
-	private List<List<Stimulate>> testCasesExtend = new ArrayList<List<Stimulate>>();
+	public List<List<String>> testCases = new ArrayList<List<String>>(); // 测试用例集合
+	public List<List<Stimulate>> testCasesExtend = new ArrayList<List<Stimulate>>();
+	public List<String> abstractTS = new ArrayList<String>();
 
 	/**
 	 * 产生测试用例和路径并打印至控制台，同时将用例写入文件。
@@ -111,6 +112,7 @@ public class GenerateCases {
 			}
 		}
 		System.out.println(testSequence);
+		abstractTS.add(testSequence);
 		TCDetail.getInstance().setTestSequence(testSequence);
 
 		System.out.print("激励序列:");
@@ -129,10 +131,10 @@ public class GenerateCases {
 		System.out.println(stimulateSequence);
 		TCDetail.getInstance().setStimulateSequence(stimulateSequence);
 
-		System.out.print("测试用例:");
+		System.out.println("测试用例:");
 		// Evaluation.getValue(oneCaseExtend);
 
-		RandomCase.getCase(oneCaseExtend, root);
+		// RandomCase.getCase(oneCaseExtend, root);
 
 		System.out.print("测试路径:");
 		for (int i = 0; i < onePath.size(); i++) {

@@ -1,6 +1,7 @@
 package cn.edu.hdu.main;
 
 import java.io.FileOutputStream;
+import java.util.List;
 import java.util.Scanner;
 
 import org.dom4j.Document;
@@ -12,16 +13,21 @@ import org.dom4j.io.XMLWriter;
 import cn.edu.hdu.assign.BestAssign;
 import cn.edu.hdu.assign.CollectRoute;
 import cn.edu.hdu.assign.SearchConditions;
+import cn.edu.hdu.entity.AbstractTestSeq;
 import cn.edu.hdu.entity.Markov;
 import cn.edu.hdu.entity.Route;
 import cn.edu.hdu.entity.State;
+import cn.edu.hdu.entity.Stimulate;
+import cn.edu.hdu.entity.TCDetail;
 import cn.edu.hdu.entity.Transition;
 import cn.edu.hdu.random.Calculate;
 import cn.edu.hdu.random.CalculateDistribution;
 import cn.edu.hdu.random.CalculateSimilarity;
 import cn.edu.hdu.random.GenerateCases;
+import cn.edu.hdu.random.RandomCase;
 import cn.edu.hdu.random.ReadMarkov2;
 import cn.edu.hdu.utils.Constant;
+import cn.edu.hdu.utils.HibernateUtils;
 
 /**
  * 项目的主函数所在类，包括获取filees文件对象和判断markov链对象是否还有未被遍历过的迁移。
@@ -60,7 +66,7 @@ public class TheOne {
 		s.close();
 
 		// System.out.println(markov.getNumberOfStates());
-		Calculate.getAllTransValues(markov);
+		// Calculate.getAllTransValues(markov);
 
 		// 创建一个document对象，用于存储测试用例
 		Document dom = DocumentHelper.createDocument();
@@ -70,6 +76,12 @@ public class TheOne {
 
 		if (model == 2) {
 			new CollectRoute().collect(markov);
+
+			// 获取抽象测试序列
+			// showTestSequence(markov);
+			// mathematica计算
+			Calculate.getAllTransValues(markov);
+
 			new BestAssign().assign(markov, root);
 
 			System.out.println("指标---可靠性测试用例数据库覆盖率:" + markov.getDbCoverage());
@@ -80,6 +92,7 @@ public class TheOne {
 					+ CalculateSimilarity.statistic(markov, PI));
 			System.out.println("最大绕环次数为：" + (Constant.maxCircle - 1));
 		} else if (model == 1) {
+			// mathematica计算
 
 			double similarity = 999991;
 			boolean sufficiency = false;
@@ -103,14 +116,27 @@ public class TheOne {
 				// similarity = CalculateSimilarity.statistic_1(markov);
 				similarity = CalculateSimilarity.statistic(markov, PI);
 				markov.setDeviation(similarity);
-				System.out.println("指标---可靠性测试用例生成比率与使用模型实际使用概率平均偏差:"
-						+ markov.getDeviation());
-				System.out.println("\n利用平稳分布计算出的使用模型和测试模型的差异度:" + similarity);
-				System.out.println("\n当前生成的测试用例和测试路径的个数:" + numberOfTestCases
-						+ "\n\n");
+				markov.setActualNum(numberOfTestCases);
 
 			} while (similarity > 0.1);
 
+			// System.out.println("激励个数：" + gc.testCasesExtend.size());
+			// 生成方式1获取抽象测试序列
+			getAbstractTestSeqByModeOne(gc);
+			// 实例化测试用例并存入数据库
+			Calculate.getAllTransValues(markov);
+			for (int i = 0; i < gc.testCasesExtend.size(); i++) {
+				TCDetail.getInstance().setTestSequence(gc.abstractTS.get(i));
+				String stimulateSequence = getStimulateSeq(gc.testCasesExtend
+						.get(i));
+				TCDetail.getInstance().setStimulateSequence(stimulateSequence);
+				RandomCase.getCase(gc.testCasesExtend.get(i), root);
+			}
+			System.out.println("指标---可靠性测试用例生成比率与使用模型实际使用概率平均偏差:"
+					+ markov.getDeviation());
+			System.out.println("\n利用平稳分布计算出的使用模型和测试模型的差异度:" + similarity);
+			System.out.println("\n当前生成的测试用例和测试路径的个数:" + markov.getActualNum()
+					+ "\n\n");
 			// WriteTestCases.writeCases(gc.getTestCases());
 			// 打印所有状态节点的平稳分布值
 			for (double d : PI) {
@@ -124,6 +150,85 @@ public class TheOne {
 				"E:/Markov/tcs.xml"), format);
 		writer.write(dom);
 		writer.close();
+
+	}
+
+	private static String getStimulateSeq(List<Stimulate> oneCaseExtend) {
+		String stimulateSequence = "";
+		for (int i = 0; i < oneCaseExtend.size(); i++) {
+			if (i != oneCaseExtend.size() - 1) {
+				stimulateSequence = stimulateSequence
+						+ oneCaseExtend.get(i).toString() + "-->>";
+				// System.out.print(oneCaseExtend.get(i).toString() + "-->>");
+			} else {
+				stimulateSequence = stimulateSequence
+						+ oneCaseExtend.get(i).toString();
+				// System.out.println(oneCaseExtend.get(i).toString());
+			}
+		}
+		return stimulateSequence;
+	}
+
+	// 获取所有的抽象测试序列mode1
+	private static void getAbstractTestSeqByModeOne(GenerateCases gc) {
+		for (String ts : gc.abstractTS) {
+			System.out.println(ts);
+		}
+
+	}
+
+	private static void getTSAndSave(Markov markov) {
+		for (Route r : markov.getRouteList()) {
+
+			String testSequence = "";
+			for (int i = 0; i < r.getTransitionList().size(); i++) {
+				if (i != r.getTransitionList().size() - 1) {
+					testSequence = testSequence
+							+ r.getTransitionList().get(i).getName() + "-->>";
+					// System.out.print(oneCaseExtend.get(i).toString() +
+					// "-->>");
+				} else {
+					testSequence = testSequence
+							+ r.getTransitionList().get(i).getName();
+					// System.out.println(oneCaseExtend.get(i).toString());
+				}
+			}
+			r.setTcSequence(testSequence);
+			AbstractTestSeq ats = new AbstractTestSeq(r.getTcSequence());
+			for (int i = 0; i < r.getNumber(); i++) {
+
+				HibernateUtils.saveTCSeq(ats);
+			}
+
+		}
+
+	}
+
+	// 获取所有的抽象测试序列mode2
+	private static void showTestSequence(Markov markov) {
+		for (Route r : markov.getRouteList()) {
+
+			String testSequence = "";
+			for (int i = 0; i < r.getTransitionList().size(); i++) {
+				if (i != r.getTransitionList().size() - 1) {
+					testSequence = testSequence
+							+ r.getTransitionList().get(i).getName() + "-->>";
+					// System.out.print(oneCaseExtend.get(i).toString() +
+					// "-->>");
+				} else {
+					testSequence = testSequence
+							+ r.getTransitionList().get(i).getName();
+					// System.out.println(oneCaseExtend.get(i).toString());
+				}
+			}
+			r.setTcSequence(testSequence);
+			for (int i = 0; i < r.getNumber(); i++) {
+
+				// 显示抽象测试序列testSequence至列表
+				System.out.println(testSequence);
+			}
+
+		}
 
 	}
 

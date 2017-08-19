@@ -30,6 +30,7 @@
 		
 		<!-- 3. 加载所有映射 -->
 		<mapping resource="cn/edu/hdu/entity/TCDetail.hbm.xml"/>
+		<mapping resource="cn/edu/hdu/entity/AbstractTestSeq.hbm.xml"/>
 		
 	</session-factory>
 </hibernate-configuration>

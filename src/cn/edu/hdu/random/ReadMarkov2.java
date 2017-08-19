@@ -34,7 +34,7 @@ public class ReadMarkov2 {
 	public Document getDom() throws Exception {
 		SAXReader reader = new SAXReader();
 		// Document dom = reader.read("telephone_extend_2.xml");
-		// Document dom = reader.read("telephone_nocircle.xml");
+		// Document dom = reader.read("Primary Use Cases.xml");
 		// Document dom = reader.read("NewMarkov.xml");
 		// Document dom = reader.read("Software_MarkovChainModel1.xml");
 		Document dom = reader.read("su3.xml");
@@ -153,6 +153,15 @@ public class ReadMarkov2 {
 						Element paramType = parameterElement
 								.element("paramType");
 						Element domain = parameterElement.element("domain");
+						if (domain == null) {
+							throw new RuntimeException("状态"
+									+ headState.getStateName()
+									+ "下的迁移："
+									+ arc.element("name").getText().trim()
+									+ "中的参数"
+									+ parameterElement.element("paramName")
+											.getText() + "缺少domain标签啊！");
+						}
 						parameter.setName(paramName.getText());
 						parameter.setParamType(paramType.getText());
 						parameter.setDomainType(domain.attributeValue("type"));

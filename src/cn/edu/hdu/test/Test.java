@@ -3,21 +3,22 @@ package cn.edu.hdu.test;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-
 public class Test {
 	public static void main(String[] args) throws Exception {
-		String str = "(a + b>= 0 && a +b<= 6&&a-b>0)";
-		ScriptEngineManager manager = new ScriptEngineManager();
-		ScriptEngine engine = manager.getEngineByName("js");
-		engine.put("a", 3);
-		engine.put("b", 1);
-		Object result = engine.eval(str);
-
-		System.out.println("结果类型:" + result.getClass().getName() + ",计算结果:"
-				+ result);
-		test();
+		// String str = "(a + b>= 0 && a +b<= 6&&a-b>0)";
+		// ScriptEngineManager manager = new ScriptEngineManager();
+		// ScriptEngine engine = manager.getEngineByName("js");
+		// engine.put("a", 3);
+		// engine.put("b", 1);
+		// Object result = engine.eval(str);
+		//
+		// System.out.println("结果类型:" + result.getClass().getName() + ",计算结果:"
+		// + result);
+		// test();
+		String s = "111";
+		if (s == "111") {
+			System.out.println(3);
+		}
 	}
 
 	public static void test1() {
