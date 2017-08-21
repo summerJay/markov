@@ -13,7 +13,6 @@ import org.dom4j.io.XMLWriter;
 import cn.edu.hdu.assign.BestAssign;
 import cn.edu.hdu.assign.CollectRoute;
 import cn.edu.hdu.assign.SearchConditions;
-import cn.edu.hdu.entity.AbstractTestSeq;
 import cn.edu.hdu.entity.Markov;
 import cn.edu.hdu.entity.Route;
 import cn.edu.hdu.entity.State;
@@ -27,7 +26,6 @@ import cn.edu.hdu.random.GenerateCases;
 import cn.edu.hdu.random.RandomCase;
 import cn.edu.hdu.random.ReadMarkov2;
 import cn.edu.hdu.utils.Constant;
-import cn.edu.hdu.utils.HibernateUtils;
 
 /**
  * 项目的主函数所在类，包括获取filees文件对象和判断markov链对象是否还有未被遍历过的迁移。
@@ -173,33 +171,6 @@ public class TheOne {
 	private static void getAbstractTestSeqByModeOne(GenerateCases gc) {
 		for (String ts : gc.abstractTS) {
 			System.out.println(ts);
-		}
-
-	}
-
-	private static void getTSAndSave(Markov markov) {
-		for (Route r : markov.getRouteList()) {
-
-			String testSequence = "";
-			for (int i = 0; i < r.getTransitionList().size(); i++) {
-				if (i != r.getTransitionList().size() - 1) {
-					testSequence = testSequence
-							+ r.getTransitionList().get(i).getName() + "-->>";
-					// System.out.print(oneCaseExtend.get(i).toString() +
-					// "-->>");
-				} else {
-					testSequence = testSequence
-							+ r.getTransitionList().get(i).getName();
-					// System.out.println(oneCaseExtend.get(i).toString());
-				}
-			}
-			r.setTcSequence(testSequence);
-			AbstractTestSeq ats = new AbstractTestSeq(r.getTcSequence());
-			for (int i = 0; i < r.getNumber(); i++) {
-
-				HibernateUtils.saveTCSeq(ats);
-			}
-
 		}
 
 	}

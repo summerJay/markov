@@ -6,7 +6,6 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.junit.Test;
 
-import cn.edu.hdu.entity.AbstractTestSeq;
 import cn.edu.hdu.entity.TCDetail;
 
 public class HibernateUtils {
@@ -33,22 +32,6 @@ public class HibernateUtils {
 		Transaction tx = session.beginTransaction();
 		// -----执行操作-----
 		session.save(detail);
-		// 提交事务/ 关闭
-		tx.commit();
-		session.close();
-	}
-
-	public static void saveTCSeq(AbstractTestSeq ats) {
-		// 对象
-
-		// 根据session的工厂，创建session对象
-		Session session = sf.openSession();
-		// 开启事务
-		Transaction tx = session.beginTransaction();
-		// -----执行操作-----
-
-		session.save(ats);
-
 		// 提交事务/ 关闭
 		tx.commit();
 		session.close();
