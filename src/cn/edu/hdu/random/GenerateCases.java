@@ -9,7 +9,6 @@ import org.dom4j.Element;
 import cn.edu.hdu.entity.Markov;
 import cn.edu.hdu.entity.State;
 import cn.edu.hdu.entity.Stimulate;
-import cn.edu.hdu.entity.TCDetail;
 import cn.edu.hdu.entity.Transition;
 
 /**
@@ -22,7 +21,7 @@ import cn.edu.hdu.entity.Transition;
 public class GenerateCases {
 
 	private static final int COEFFICIENT = 8; // 设置一个常量系数
-	private int oneBatchSize; // 生成的每一批的测试用例个数
+	private int oneBatchSize = 1000; // 生成的每一批的测试用例个数
 	private List<List<Integer>> testPaths = new ArrayList<List<Integer>>(); // 测试路径集合
 	public List<List<String>> testCases = new ArrayList<List<String>>(); // 测试用例集合
 	public List<List<Stimulate>> testCasesExtend = new ArrayList<List<Stimulate>>();
@@ -39,8 +38,9 @@ public class GenerateCases {
 	 * */
 	public int generate(Markov markov, Element root) throws IOException {
 
-		oneBatchSize = (int) (markov.getStates().size()
-				* markov.getStates().size() * 0.5); // 设置每一批生成N*50个测试用例
+		// oneBatchSize = (int) (markov.getStates().size()
+		// * markov.getStates().size() * 0.5); // 设置每一批生成N*50个测试用例
+		// System.out.println(oneBatchSize + "------------------------");
 		int startSize = testCases.size();
 
 		while (testCases.size() - startSize < oneBatchSize) {
@@ -100,7 +100,7 @@ public class GenerateCases {
 	private void printCaseAndPath(List<String> oneCase,
 			List<Stimulate> oneCaseExtend, List<Integer> onePath, Element root) {
 
-		System.out.print("测试序列:");
+		// System.out.print("测试序列:");
 		String testSequence = "";
 		for (int i = 0; i < oneCase.size(); i++) {
 			if (i != oneCase.size() - 1) {
@@ -111,40 +111,31 @@ public class GenerateCases {
 				// System.out.println(oneCase.get(i));
 			}
 		}
-		System.out.println(testSequence);
+		// System.out.println(testSequence);
 		abstractTS.add(testSequence);
-		TCDetail.getInstance().setTestSequence(testSequence);
-
-		System.out.print("激励序列:");
-		String stimulateSequence = "";
-		for (int i = 0; i < oneCaseExtend.size(); i++) {
-			if (i != oneCaseExtend.size() - 1) {
-				stimulateSequence = stimulateSequence
-						+ oneCaseExtend.get(i).toString() + "-->>";
-				// System.out.print(oneCaseExtend.get(i).toString() + "-->>");
-			} else {
-				stimulateSequence = stimulateSequence
-						+ oneCaseExtend.get(i).toString();
-				// System.out.println(oneCaseExtend.get(i).toString());
-			}
-		}
-		System.out.println(stimulateSequence);
-		TCDetail.getInstance().setStimulateSequence(stimulateSequence);
-
-		System.out.println("测试用例:");
-		// Evaluation.getValue(oneCaseExtend);
-
-		// RandomCase.getCase(oneCaseExtend, root);
-
-		System.out.print("测试路径:");
-		for (int i = 0; i < onePath.size(); i++) {
-			if (i != onePath.size() - 1) {
-				System.out.print(onePath.get(i) + "-->>");
-			} else {
-				System.out.println(onePath.get(i));
-				System.out.println();
-			}
-		}
+		/*
+		 * TCDetail.getInstance().setTestSequence(testSequence);
+		 * 
+		 * System.out.print("激励序列:"); String stimulateSequence = ""; for (int i
+		 * = 0; i < oneCaseExtend.size(); i++) { if (i != oneCaseExtend.size() -
+		 * 1) { stimulateSequence = stimulateSequence +
+		 * oneCaseExtend.get(i).toString() + "-->>"; //
+		 * System.out.print(oneCaseExtend.get(i).toString() + "-->>"); } else {
+		 * stimulateSequence = stimulateSequence +
+		 * oneCaseExtend.get(i).toString(); //
+		 * System.out.println(oneCaseExtend.get(i).toString()); } }
+		 * System.out.println(stimulateSequence);
+		 * TCDetail.getInstance().setStimulateSequence(stimulateSequence);
+		 * 
+		 * System.out.println("测试用例:"); // Evaluation.getValue(oneCaseExtend);
+		 * 
+		 * // RandomCase.getCase(oneCaseExtend, root);
+		 * 
+		 * System.out.print("测试路径:"); for (int i = 0; i < onePath.size(); i++) {
+		 * if (i != onePath.size() - 1) { System.out.print(onePath.get(i) +
+		 * "-->>"); } else { System.out.println(onePath.get(i));
+		 * System.out.println(); } }
+		 */
 
 	}
 

@@ -51,7 +51,8 @@ public class TheOne {
 		System.out.println("			2.自定义测试用例个数生成");
 		int model = s.nextInt();
 		if (model == 2) {
-			int min = getMinTCNum(markov, s);
+			// int min = getMinTCNum(markov, s);
+			int min = getMinTCNumFromTwo(markov, s);
 			System.out.println("请输入你想要生成的测试用例个数,并且不低于满足当前充分性指标的最低测试用例个数" + min
 					+ "：");
 			int N;
@@ -113,6 +114,8 @@ public class TheOne {
 				flag = false;
 				// similarity = CalculateSimilarity.statistic_1(markov);
 				similarity = CalculateSimilarity.statistic(markov, PI);
+				// similarity = CalculateSimilarity.discriminant(markov, PI);
+				// System.out.println(similarity + "+++++++++++++++++++++++++");
 				markov.setDeviation(similarity);
 				markov.setActualNum(numberOfTestCases);
 
@@ -120,7 +123,7 @@ public class TheOne {
 
 			// System.out.println("激励个数：" + gc.testCasesExtend.size());
 			// 生成方式1获取抽象测试序列
-			getAbstractTestSeqByModeOne(gc);
+			// getAbstractTestSeqByModeOne(gc);
 			// 实例化测试用例并存入数据库
 			Calculate.getAllTransValues(markov);
 			for (int i = 0; i < gc.testCasesExtend.size(); i++) {
@@ -228,6 +231,24 @@ public class TheOne {
 		int temp = Math.max(min_pc, min_routePro);
 
 		return Math.max(temp, min_mcdc);
+
+	}
+
+	// 从两个用例数中挑个大的即可 去除了上面方法中的按照固定最小概率路径个数为一来计算最小测试用例数目 防止用例数爆炸
+	private static int getMinTCNumFromTwo(Markov markov, Scanner s)
+			throws Exception {
+		// 按照pc公式计算最小测试用例数目
+		System.out.println("请输入软件可靠性指标p和置信度c：");
+		System.out.print("p = ");
+		double p = s.nextDouble();
+		System.out.print("c = ");
+		double c = s.nextDouble();
+		int min_pc = (int) Math.ceil(Math.log10(1 - c) / Math.log10(1 - p));
+
+		// 按照DO-178B MCDC准则计算最小测试用例数目(条件数+1)
+		int min_mcdc = SearchConditions.findConditionNum() + 1;
+
+		return Math.max(min_pc, min_mcdc);
 
 	}
 
