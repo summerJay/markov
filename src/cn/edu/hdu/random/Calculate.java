@@ -70,6 +70,9 @@ public class Calculate {
 						// 拼接参数变量成参数形式
 						String param2 = variables.toString().substring(1,
 								variables.toString().length() - 1);
+						// if (t.getStimulate().getName().equals("exhausted")) {
+						// System.out.println();
+						// }
 						System.out
 								.println("加边界运算处理语句：SetAccuracy[FindInstance[{"
 										+ param1 + "}, {" + param2

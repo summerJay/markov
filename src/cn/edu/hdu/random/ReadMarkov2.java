@@ -34,7 +34,7 @@ public class ReadMarkov2 {
 	public Document getDom() throws Exception {
 		SAXReader reader = new SAXReader();
 		// Document dom = reader.read("telephone_extend_2.xml");
-		Document dom = reader.read("Primary Use Cases.xml");
+		Document dom = reader.read("EADemo2.xml");
 		// Document dom = reader.read("NewMarkov.xml");
 		// Document dom = reader.read("Software_MarkovChainModel1.xml");
 		// Document dom = reader.read("su3.xml");
@@ -116,6 +116,9 @@ public class ReadMarkov2 {
 				}
 
 				// 设置测试所需各种条件
+				// String con = conditions.getTextTrim();
+				// String replace1 = con.replaceAll("≥", "=");
+				// String replace2 = replace1.replaceAll("≤", "=");
 				t.setConditions(conditions.getTextTrim());
 
 				// 封装transition上的激励stimulate，并赋值给transition上面的stimulate属性

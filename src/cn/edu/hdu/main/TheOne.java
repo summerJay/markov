@@ -72,7 +72,14 @@ public class TheOne {
 		Element root = dom.addElement("TCS");
 		// 计算markov链的平稳分布
 		double[] PI = CalculateDistribution.stationaryDistribution(markov);
-
+		// 先初始化所有迁移个数为1，防止无法计算相似度
+		/*
+		 * for (State state : markov.getStates()) {
+		 * 
+		 * for (Transition t : state.getOutTransitions()) { t.setAccessTimes(1);
+		 * 
+		 * } }
+		 */
 		if (model == 2) {
 			new CollectRoute().collect(markov);
 
@@ -97,6 +104,7 @@ public class TheOne {
 			boolean sufficiency = false;
 			GenerateCases gc = new GenerateCases();
 			boolean flag = true;
+			int count = 0;
 
 			do {
 				int numberOfTestCases = gc.generate(markov, root);
@@ -108,7 +116,12 @@ public class TheOne {
 				// 迁移或者状态覆盖百分百
 
 				if (!sufficiency) {
+					// ++count;
 					continue;
+					// if (count <= 6) {
+					//
+					// continue;
+					// }
 				}
 
 				flag = false;
@@ -118,6 +131,9 @@ public class TheOne {
 				// System.out.println(similarity + "+++++++++++++++++++++++++");
 				markov.setDeviation(similarity);
 				markov.setActualNum(numberOfTestCases);
+				// if (numberOfTestCases > 8000) {
+				// break;
+				// }
 
 			} while (similarity > 0.1);
 
