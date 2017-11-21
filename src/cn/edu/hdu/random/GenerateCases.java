@@ -2,7 +2,9 @@ package cn.edu.hdu.random;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.dom4j.Element;
 
@@ -26,7 +28,10 @@ public class GenerateCases {
 	public List<List<String>> testCases = new ArrayList<List<String>>(); // 测试用例集合
 	public List<List<Stimulate>> testCasesExtend = new ArrayList<List<Stimulate>>();
 	public List<String> abstractTS = new ArrayList<String>();
+	// 计算第一种生成方式的数据库覆盖率//////////////////////////
+	Set<String> set = new HashSet<String>();
 
+	// ///////////////////////////////////////////////////////////
 	/**
 	 * 产生测试用例和路径并打印至控制台，同时将用例写入文件。
 	 * 
@@ -48,7 +53,10 @@ public class GenerateCases {
 			List<Integer> onePath = new ArrayList<Integer>(); // 存储当前生成的一个测试路径
 			List<String> oneCase = new ArrayList<String>(); // 存储当前生成的一个测试用例
 			List<Stimulate> oneCaseExtend = new ArrayList<Stimulate>();// 存储当前生成的一个测试用例扩展版
-
+			// ////// 记录每条路径的概率///////////////////////////////////
+			double routeProb = 1.0;
+			String oneRoute = "";
+			// ///////////////////////////////////////////////////////////
 			onePath.add(0);
 			oneCase.add(markov.getStates().get(0).getStateName());
 
@@ -67,6 +75,11 @@ public class GenerateCases {
 				Transition nextTransition = rouletteWheels(currentState
 						.getOutTransitions()); // 通过赌轮算法获取当前状态节点的下一个出迁移
 
+				// 计算策略一数据库覆盖率///////////////////////////////
+				routeProb *= nextTransition.getProbability();
+				oneRoute += nextTransition.getStimulate().getName();
+				// //////////////////////////////////////////////////////
+
 				nextTransition
 						.setAccessTimes(nextTransition.getAccessTimes() + 1);
 
@@ -84,6 +97,12 @@ public class GenerateCases {
 			testPaths.add(onePath);
 			testCases.add(oneCase);
 			testCasesExtend.add(oneCaseExtend);
+			// 数据库覆盖率////////////////////////////////////////////
+			boolean result = set.add(oneRoute);
+			if (result) {
+				markov.setDbCoverage(markov.getDbCoverage() + routeProb);
+			}
+			// ///////////////////////////////////////////////////////
 			// 封装成测试用例详细javabean
 
 			// bufw.write(oneCase.toString());

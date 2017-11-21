@@ -149,6 +149,7 @@ public class TheOne {
 				TCDetail.getInstance().setStimulateSequence(stimulateSequence);
 				RandomCase.getCase(gc.testCasesExtend.get(i), root);
 			}
+			System.out.println("指标---可靠性测试用例数据库覆盖率:" + markov.getDbCoverage());
 			System.out.println("指标---可靠性测试用例生成比率与使用模型实际使用概率平均偏差:"
 					+ markov.getDeviation());
 			System.out.println("\n利用平稳分布计算出的使用模型和测试模型的差异度:" + similarity);
