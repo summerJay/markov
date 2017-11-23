@@ -23,7 +23,7 @@ import cn.edu.hdu.entity.Transition;
 public class GenerateCases {
 
 	private static final int COEFFICIENT = 8; // 设置一个常量系数
-	private int oneBatchSize = 1000; // 生成的每一批的测试用例个数
+	private int oneBatchSize = 1; // 生成的每一批的测试用例个数
 	private List<List<Integer>> testPaths = new ArrayList<List<Integer>>(); // 测试路径集合
 	public List<List<String>> testCases = new ArrayList<List<String>>(); // 测试用例集合
 	public List<List<Stimulate>> testCasesExtend = new ArrayList<List<Stimulate>>();

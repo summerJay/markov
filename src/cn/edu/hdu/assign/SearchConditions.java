@@ -12,6 +12,7 @@ public class SearchConditions {
 
 	public static int findConditionNum() throws Exception {
 		File directory = new File("E:/Markov/·É¿ØÔ´Âë/ardupilot-master");
+		// File directory = new File("H:/ES/ES");
 		search(directory);
 		return count;
 	}

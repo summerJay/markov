@@ -34,7 +34,8 @@ public class ReadMarkov2 {
 	public Document getDom() throws Exception {
 		SAXReader reader = new SAXReader();
 		// Document dom = reader.read("telephone_extend_2.xml");
-		Document dom = reader.read("EADemo2.xml");
+		// Document dom = reader.read("EADemo2.xml");
+		Document dom = reader.read("VioletTimeDemo_TimeExtend.xml");
 		// Document dom = reader.read("NewMarkov.xml");
 		// Document dom = reader.read("Software_MarkovChainModel1.xml");
 		// Document dom = reader.read("su3.xml");

@@ -92,6 +92,10 @@ public class TheOne {
 
 			System.out.println("指标---可靠性测试用例数据库覆盖率:" + markov.getDbCoverage());
 			markov.setDeviation(CalculateSimilarity.statistic(markov, PI));
+			// markov.setDeviation(CalculateSimilarity.discriminant(markov,
+			// PI));
+			// markov.setDeviation(CalculateSimilarity.statistic_1(markov));
+			System.out.println("逆向计算完相似度是否满足迁移覆盖：" + isSufficient(markov));
 			System.out.println("指标---可靠性测试用例生成比率与使用模型实际使用概率平均偏差:"
 					+ markov.getDeviation());
 			System.out.println("利用平稳分布计算出的使用模型和测试模型的差异度："
@@ -117,18 +121,22 @@ public class TheOne {
 
 				if (!sufficiency) {
 					// ++count;
-					continue;
+					// continue;
 					// if (count <= 6) {
 					//
 					// continue;
 					// }
+					similarity = CalculateSimilarity.discriminant(markov, PI);
+				} else {
+					similarity = CalculateSimilarity.statistic(markov, PI);
+					flag = false;
 				}
 
-				flag = false;
+				// flag = false;
 				// similarity = CalculateSimilarity.statistic_1(markov);
-				similarity = CalculateSimilarity.statistic(markov, PI);
+				// similarity = CalculateSimilarity.statistic(markov, PI);
 				// similarity = CalculateSimilarity.discriminant(markov, PI);
-				// System.out.println(similarity + "+++++++++++++++++++++++++");
+				System.out.println(similarity + "+++++++++++++++++++++++++");
 				markov.setDeviation(similarity);
 				markov.setActualNum(numberOfTestCases);
 				// if (numberOfTestCases > 8000) {
