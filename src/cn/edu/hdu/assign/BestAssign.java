@@ -19,14 +19,19 @@ public class BestAssign {
 
 		List<Route> routeList = markov.getRouteList();
 		for (Route route : routeList) {
-			actualTcNumber += route.getNumber();
+			// 将概率特别小只被分配0个的测试路径至少分配一个用例
+
+			actualTcNumber += (route.getNumber() == 0 ? 1 : route.getNumber());
 			List<Transition> transitionList = route.getTransitionList();
-			List<Stimulate> stimulateList = transform(transitionList,
-					route.getNumber());
+			List<Stimulate> stimulateList = transform(transitionList, route);
 			String testSequence = getTestSequence(stimulateList);
 			String stimulateSequence = getStimulateSequence(stimulateList);
 			TCDetail.getInstance().setTestSequence(testSequence);
 			TCDetail.getInstance().setStimulateSequence(stimulateSequence);
+			// 将概率特别小只被分配0个的测试路径至少分配一个用例
+			if (route.getNumber() == 0) {
+				route.setNumber(1);
+			}
 
 			for (int i = 0; i < route.getNumber(); i++) {
 				System.out.print("测试用例：");
@@ -111,19 +116,21 @@ public class BestAssign {
 	}
 
 	/**
-	 * 将迁移集合转换成激励集合
+	 * 将迁移集合转换成激励集合 概率映射
 	 * 
 	 * @param transitionList
 	 * @param routeNumber
 	 * @return
 	 */
 	private List<Stimulate> transform(List<Transition> transitionList,
-			int routeNumber) {
+			Route route) {
+		int routeNumber = route.getNumber();
 		List<Stimulate> stimulateList = new ArrayList<Stimulate>();
 		for (Transition transition : transitionList) {
 			stimulateList.add(transition.getStimulate());
-			transition
-					.setAccessTimes(transition.getAccessTimes() + routeNumber);
+			transition.setAccessTimes(transition.getAccessTimes()
+					+ (routeNumber == 0 ? route.getRouteProbability()
+							: routeNumber));
 		}
 		return stimulateList;
 	}

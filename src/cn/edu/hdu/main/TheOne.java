@@ -98,8 +98,10 @@ public class TheOne {
 			System.out.println("逆向计算完相似度是否满足迁移覆盖：" + isSufficient(markov));
 			System.out.println("指标---可靠性测试用例生成比率与使用模型实际使用概率平均偏差:"
 					+ markov.getDeviation());
-			System.out.println("利用平稳分布计算出的使用模型和测试模型的差异度："
-					+ CalculateSimilarity.statistic(markov, PI));
+			System.out.println("利用变种平稳分布计算出的使用模型和测试模型的差异度："
+					+ CalculateSimilarity.discriminant(markov, PI));
+			System.out.println("利用欧氏距离计算出的使用模型和测试模型的差异度："
+					+ CalculateSimilarity.statistic_1(markov));
 			System.out.println("最大绕环次数为：" + (Constant.maxCircle - 1));
 		} else if (model == 1) {
 			// mathematica计算
@@ -126,6 +128,7 @@ public class TheOne {
 					//
 					// continue;
 					// }
+					// similarity = CalculateSimilarity.statistic_1(markov);
 					similarity = CalculateSimilarity.discriminant(markov, PI);
 				} else {
 					similarity = CalculateSimilarity.statistic(markov, PI);
@@ -143,7 +146,7 @@ public class TheOne {
 				// break;
 				// }
 
-			} while (similarity > 0.1);
+			} while (similarity > 0.1 /* || (similarity + "").equals("NaN") */);
 
 			// System.out.println("激励个数：" + gc.testCasesExtend.size());
 			// 生成方式1获取抽象测试序列
@@ -163,6 +166,8 @@ public class TheOne {
 			System.out.println("\n利用平稳分布计算出的使用模型和测试模型的差异度:" + similarity);
 			System.out.println("\n当前生成的测试用例和测试路径的个数:" + markov.getActualNum()
 					+ "\n\n");
+			System.out.println("顺向计算完相似度是否满足迁移覆盖：" + isSufficient(markov));
+
 			// WriteTestCases.writeCases(gc.getTestCases());
 			// 打印所有状态节点的平稳分布值
 			for (double d : PI) {
@@ -291,9 +296,9 @@ public class TheOne {
 			for (Transition outTransition : state.getOutTransitions()) {
 
 				if (outTransition.getAccessTimes() == 0) {
-					System.out.println("未访问的迁移：stateName:"
-							+ state.getStateName() + "   outTransition:"
-							+ outTransition.getName());
+					// System.out.println("未访问的迁移：stateName:"
+					// + state.getStateName() + "   outTransition:"
+					// + outTransition.getName());
 					return false;
 				}
 			}

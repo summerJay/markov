@@ -14,6 +14,8 @@ import cn.edu.hdu.entity.Transition;
 public class CalculateSimilarity {
 	private static final double e = 0.09;
 
+	// private static final double e = 0.0000001;
+
 	/**
 	 * 利用平稳分布求使用链和测试链的相似度
 	 * 
@@ -29,7 +31,7 @@ public class CalculateSimilarity {
 
 		for (State state : markov.getStates()) {
 
-			int totalTimes = 0;
+			double totalTimes = 0;
 			for (Transition t : state.getOutTransitions()) {
 
 				totalTimes += t.getAccessTimes();
@@ -41,6 +43,8 @@ public class CalculateSimilarity {
 				// * (Math.log10(t.getProbability()
 				// / (t.getAccessTimes() * 1.0 / totalTimes)) / Math
 				// .log10(2)); 这里为什么多了log10(2)？？？
+				System.out.println(t.getAccessTimes() * 1.0 / totalTimes
+						+ "------测试链迁移概率");
 				dis += PI[state.getStateNum()]
 						* t.getProbability()
 						* (Math.log10(t.getProbability()
@@ -66,7 +70,7 @@ public class CalculateSimilarity {
 
 		for (State state : markov.getStates()) {
 
-			int totalTimes = 0;
+			double totalTimes = 0;
 			for (Transition t : state.getOutTransitions()) {
 
 				totalTimes += t.getAccessTimes();
@@ -80,9 +84,9 @@ public class CalculateSimilarity {
 								: (t.getAccessTimes() * 1.0 / totalTimes));
 				dis += PI[state.getStateNum()] * t.getProbability()
 						* (Math.log10(t.getProbability() / low));
-				// System.out.println(PI[state.getStateNum()] + "*"
-				// + t.getProbability() + "* (Math.log10("
-				// + t.getProbability() + "/" + low + ") /Math.log10(2))");
+				System.out.println(PI[state.getStateNum()] + "*"
+						+ t.getProbability() + "* (Math.log10("
+						+ t.getProbability() + "/" + low + ") /Math.log10(2))");
 			}
 		}
 

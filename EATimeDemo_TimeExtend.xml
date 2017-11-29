@@ -4,7 +4,7 @@
   <name>Software_MarkovChainModel</name>
   <state label="timeDelay">
     <name>S10</name>
-    <time>0,3.0</time>
+    <time>0,3000.0</time>
     <arc label="prob" type="common">
       <name>S10_S11_peopleOutIn()</name>
       <prob>1.0</prob>
@@ -17,14 +17,14 @@
     <name>S6-extend</name>
     <arc label="prob">
       <name>S6-TDStateFromArc</name>
-      <prob>0.012422199506118559</prob>
+      <prob>0.999996273346828</prob>
       <to>S6</to>
       <owned>null</owned>
       <conditions/>
     </arc>
     <arc label="prob">
       <name>S6-TVStateFromArc</name>
-      <prob>0.9875778004938814</prob>
+      <prob>3.7266531720536733E-6</prob>
       <to>S6-timeViolationState</to>
       <owned>null</owned>
       <conditions/>
@@ -44,14 +44,14 @@
     <name>S20-extend</name>
     <arc label="prob">
       <name>S20-TDStateFromArc</name>
-      <prob>0.5</prob>
+      <prob>0.7134952031398099</prob>
       <to>S20</to>
       <owned>null</owned>
       <conditions/>
     </arc>
     <arc label="prob">
       <name>S20-TVStateFromArc</name>
-      <prob>0.5</prob>
+      <prob>0.28650479686019015</prob>
       <to>S20-timeViolationState</to>
       <owned>null</owned>
       <conditions/>
@@ -62,16 +62,9 @@
   </state>
   <state>
     <name>S14</name>
-    <arc label="prob" type="void">
-      <name>S14_S11</name>
-      <prob>0.5</prob>
-      <to>S11</to>
-      <owned>null</owned>
-      <conditions></conditions>
-    </arc>
     <arc label="prob" type="common">
       <name>S14_S15_thisFloorPeopleIn()</name>
-      <prob>0.5</prob>
+      <prob>1.0</prob>
       <to>S15-extend</to>
       <owned>thisFloorPeopleIn</owned>
       <conditions>getCurrentFloor_empty==false</conditions>
@@ -79,7 +72,7 @@
   </state>
   <state label="timeDelay">
     <name>S15</name>
-    <time>0,0.3</time>
+    <time>0,300.0</time>
     <arc label="prob" type="common">
       <name>S15_S16_thisFloorPeopleIn_return()</name>
       <prob>1.0</prob>
@@ -90,7 +83,7 @@
   </state>
   <state label="timeDelay">
     <name>S12</name>
-    <time>0,0.3</time>
+    <time>0,300.0</time>
     <arc label="prob" type="common">
       <name>S12_S13_thisFloorPeopleOut_return()</name>
       <prob>1.0</prob>
@@ -128,7 +121,7 @@
   </state>
   <state label="timeDelay">
     <name>S18</name>
-    <time>0,0.25</time>
+    <time>0,250.0</time>
     <arc label="prob" type="common">
       <name>S18_S19_close_return()</name>
       <prob>1.0</prob>
@@ -141,14 +134,14 @@
     <name>S5-extend</name>
     <arc label="prob">
       <name>S5-TDStateFromArc</name>
-      <prob>0.012422199506118559</prob>
+      <prob>0.999996273346828</prob>
       <to>S5</to>
       <owned>null</owned>
       <conditions/>
     </arc>
     <arc label="prob">
       <name>S5-TVStateFromArc</name>
-      <prob>0.9875778004938814</prob>
+      <prob>3.7266531720536733E-6</prob>
       <to>S5-timeViolationState</to>
       <owned>null</owned>
       <conditions/>
@@ -196,16 +189,9 @@
   </state>
   <state>
     <name>S17</name>
-    <arc label="prob" type="void">
-      <name>S17_S14</name>
-      <prob>0.5</prob>
-      <to>S14</to>
-      <owned>null</owned>
-      <conditions></conditions>
-    </arc>
     <arc label="prob" type="common">
       <name>S17_S18_close()</name>
-      <prob>0.5</prob>
+      <prob>1.0</prob>
       <to>S18-extend</to>
       <owned>close</owned>
       <conditions></conditions>
@@ -215,14 +201,14 @@
     <name>S15-extend</name>
     <arc label="prob">
       <name>S15-TDStateFromArc</name>
-      <prob>0.014888060396937353</prob>
+      <prob>0.9999996940976795</prob>
       <to>S15</to>
       <owned>null</owned>
       <conditions/>
     </arc>
     <arc label="prob">
       <name>S15-TVStateFromArc</name>
-      <prob>0.9851119396030626</prob>
+      <prob>3.059023204743383E-7</prob>
       <to>S15-timeViolationState</to>
       <owned>null</owned>
       <conditions/>
@@ -272,14 +258,14 @@
     <name>S18-extend</name>
     <arc label="prob">
       <name>S18-TDStateFromArc</name>
-      <prob>0.012422199506118559</prob>
+      <prob>0.999996273346828</prob>
       <to>S18</to>
       <owned>null</owned>
       <conditions/>
     </arc>
     <arc label="prob">
       <name>S18-TVStateFromArc</name>
-      <prob>0.9875778004938814</prob>
+      <prob>3.7266531720536733E-6</prob>
       <to>S18-timeViolationState</to>
       <owned>null</owned>
       <conditions/>
@@ -299,14 +285,14 @@
     <name>S12-extend</name>
     <arc label="prob">
       <name>S12-TDStateFromArc</name>
-      <prob>0.014888060396937353</prob>
+      <prob>0.9999996940976795</prob>
       <to>S12</to>
       <owned>null</owned>
       <conditions/>
     </arc>
     <arc label="prob">
       <name>S12-TVStateFromArc</name>
-      <prob>0.9851119396030626</prob>
+      <prob>3.059023204743383E-7</prob>
       <to>S12-timeViolationState</to>
       <owned>null</owned>
       <conditions/>
@@ -314,7 +300,7 @@
   </state>
   <state label="timeDelay">
     <name>S20</name>
-    <time>0,0.25</time>
+    <time>0,25.0</time>
     <arc label="prob" type="common">
       <name>S20_S21_goUpstairs()</name>
       <prob>1.0</prob>
@@ -337,14 +323,14 @@
     <name>S10-extend</name>
     <arc label="prob">
       <name>S10-TDStateFromArc</name>
-      <prob>0.1392920235749422</prob>
+      <prob>1.0</prob>
       <to>S10</to>
       <owned>null</owned>
       <conditions/>
     </arc>
     <arc label="prob">
       <name>S10-TVStateFromArc</name>
-      <prob>0.8607079764250578</prob>
+      <prob>0.0</prob>
       <to>S10-timeViolationState</to>
       <owned>null</owned>
       <conditions/>
@@ -372,7 +358,7 @@
   </state>
   <state label="timeDelay">
     <name>S5</name>
-    <time>0,0.25</time>
+    <time>0,250.0</time>
     <arc label="prob" type="common">
       <name>S5_S6_open()</name>
       <prob>1.0</prob>
@@ -393,7 +379,7 @@
   </state>
   <state label="timeDelay">
     <name>S6</name>
-    <time>0,0.25</time>
+    <time>0,250.0</time>
     <arc label="prob" type="common">
       <name>S6_S7_open_return()</name>
       <prob>1.0</prob>

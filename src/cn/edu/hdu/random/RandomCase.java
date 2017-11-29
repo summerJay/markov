@@ -59,7 +59,17 @@ public class RandomCase {
 						+ stimulate.getAssignValue() + "]" + "→→";
 
 				Element process = tc.addElement("process");
-				Stimulate nextStimulate = oneCaseExtend.get(i + 1);
+
+				Stimulate nextStimulate = null;
+				// 删除所有带time的辣鸡时间迁移！以便被打乱的后继conditions回归正轨
+
+				for (int k = i + 1; k < oneCaseExtend.size(); ++k) {
+					nextStimulate = oneCaseExtend.get(k);
+					if (!nextStimulate.isTime()) {
+						break;
+					}
+				}
+
 				// process.addElement("conditions").setText(
 				// nextStimulate.getConditions());
 				process.addElement("operation").setText(stimulate.getName());
