@@ -15,7 +15,7 @@ public class RandomCase {
 	public static void getCase(List<Stimulate> oneCaseExtend, Element root) {
 
 		Element tc = root.addElement("testcase");
-
+		String lastStimulate = "";
 		String testCase = "";
 		for (int i = 0; i < oneCaseExtend.size(); i++) {
 			Stimulate stimulate = oneCaseExtend.get(i);
@@ -23,7 +23,7 @@ public class RandomCase {
 			if ("null".equals(stimulate.getName())) {
 				continue;
 			}
-
+			lastStimulate = stimulate.getName();
 			int random = -1;
 			String str = "";
 			for (int j = 0; j < stimulate.getParameters().size(); j++) {
@@ -125,7 +125,17 @@ public class RandomCase {
 				}
 
 			}
+
 		}
+		// 处理辣鸡时间让response之后断掉的问题
+		if (lastStimulate.equals("response")) {
+			Element proc = tc.addElement("process");
+
+			proc.addElement("operation").setText("controller");
+			proc.addElement("input").setText("State=idle,State=idle,Floor=1");
+
+		}
+
 		if (testCase.endsWith("→→")) {
 			testCase = testCase.substring(0, testCase.length() - 2);
 		}
