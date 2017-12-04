@@ -84,7 +84,7 @@ public class TheOne {
 			new CollectRoute().collect(markov);
 
 			// 获取抽象测试序列
-			// showTestSequence(markov);
+			showTestSequence(markov);
 			// mathematica计算
 			Calculate.getAllTransValues(markov);
 
@@ -226,6 +226,10 @@ public class TheOne {
 				}
 			}
 			r.setTcSequence(testSequence);
+			if (r.getNumber() == 0) {
+				// 显示抽象测试序列testSequence至列表
+				System.out.println(testSequence);
+			}
 			for (int i = 0; i < r.getNumber(); i++) {
 
 				// 显示抽象测试序列testSequence至列表
