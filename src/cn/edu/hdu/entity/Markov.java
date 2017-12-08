@@ -22,6 +22,8 @@ public class Markov {
 	private double deviation;// 指标：测试链与使用链的偏差
 	private int tcNumber;
 	private int actualNum;
+	// 存放分段压缩路径
+	private List<OnePiece> classRoute;
 
 	public List<State> getStates() {
 		return states;
@@ -101,6 +103,14 @@ public class Markov {
 
 	public void setActualNum(int actualNum) {
 		this.actualNum = actualNum;
+	}
+
+	public List<OnePiece> getClassRoute() {
+		return classRoute;
+	}
+
+	public void setClassRoute(List<OnePiece> classRoute) {
+		this.classRoute = classRoute;
 	}
 
 }

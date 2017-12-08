@@ -11,7 +11,9 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
 
 import cn.edu.hdu.assign.BestAssign;
+import cn.edu.hdu.assign.ClassifyAssign;
 import cn.edu.hdu.assign.CollectRoute;
+import cn.edu.hdu.assign.CollectRoutePaper;
 import cn.edu.hdu.assign.SearchConditions;
 import cn.edu.hdu.entity.Markov;
 import cn.edu.hdu.entity.Route;
@@ -82,6 +84,7 @@ public class TheOne {
 		 */
 		if (model == 2) {
 			new CollectRoute().collect(markov);
+			// new CollectRoutePaper().collect(markov);
 
 			// 获取抽象测试序列
 			showTestSequence(markov);
@@ -89,6 +92,7 @@ public class TheOne {
 			Calculate.getAllTransValues(markov);
 
 			new BestAssign().assign(markov, root);
+			// new ClassifyAssign().assign(markov, root);
 
 			System.out.println("指标---可靠性测试用例数据库覆盖率:" + markov.getDbCoverage());
 			markov.setDeviation(CalculateSimilarity.statistic(markov, PI));
@@ -173,6 +177,31 @@ public class TheOne {
 			for (double d : PI) {
 				System.out.print(d + "  ");
 			}
+		} else if (model == 3) {
+			// new CollectRoute().collect(markov);
+			new CollectRoutePaper().collect(markov);
+
+			// 获取抽象测试序列
+			showTestSequence(markov);
+			// mathematica计算
+			Calculate.getAllTransValues(markov);
+
+			// new BestAssign().assign(markov, root);
+			new ClassifyAssign().assign(markov, root);
+
+			System.out.println("指标---可靠性测试用例数据库覆盖率:" + markov.getDbCoverage());
+			markov.setDeviation(CalculateSimilarity.statistic(markov, PI));
+			// markov.setDeviation(CalculateSimilarity.discriminant(markov,
+			// PI));
+			// markov.setDeviation(CalculateSimilarity.statistic_1(markov));
+			System.out.println("逆向计算完相似度是否满足迁移覆盖：" + isSufficient(markov));
+			System.out.println("指标---可靠性测试用例生成比率与使用模型实际使用概率平均偏差:"
+					+ markov.getDeviation());
+			System.out.println("利用变种平稳分布计算出的使用模型和测试模型的差异度："
+					+ CalculateSimilarity.discriminant(markov, PI));
+			System.out.println("利用欧氏距离计算出的使用模型和测试模型的差异度："
+					+ CalculateSimilarity.statistic_1(markov));
+			System.out.println("最大绕环次数为：" + (Constant.maxCircle - 1));
 		}
 
 		// 将存储好测试用例的document对象写入XML文件

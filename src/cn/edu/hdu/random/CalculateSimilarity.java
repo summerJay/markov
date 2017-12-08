@@ -43,8 +43,8 @@ public class CalculateSimilarity {
 				// * (Math.log10(t.getProbability()
 				// / (t.getAccessTimes() * 1.0 / totalTimes)) / Math
 				// .log10(2)); ’‚¿ÔŒ™ ≤√¥∂‡¡Àlog10(2)£ø£ø£ø
-				System.out.println(t.getAccessTimes() * 1.0 / totalTimes
-						+ "------≤‚ ‘¡¥«®“∆∏≈¬ ");
+				// System.out.println(t.getAccessTimes() * 1.0 / totalTimes
+				// + "------≤‚ ‘¡¥«®“∆∏≈¬ ");
 				dis += PI[state.getStateNum()]
 						* t.getProbability()
 						* (Math.log10(t.getProbability()
@@ -84,9 +84,9 @@ public class CalculateSimilarity {
 								: (t.getAccessTimes() * 1.0 / totalTimes));
 				dis += PI[state.getStateNum()] * t.getProbability()
 						* (Math.log10(t.getProbability() / low));
-				System.out.println(PI[state.getStateNum()] + "*"
-						+ t.getProbability() + "* (Math.log10("
-						+ t.getProbability() + "/" + low + ") /Math.log10(2))");
+				// System.out.println(PI[state.getStateNum()] + "*"
+				// + t.getProbability() + "* (Math.log10("
+				// + t.getProbability() + "/" + low + ") /Math.log10(2))");
 			}
 		}
 
@@ -105,7 +105,7 @@ public class CalculateSimilarity {
 		double distance = 0.0;
 		for (State state : markov.getStates()) {
 
-			int totalTimes = 0;
+			double totalTimes = 0;
 			for (Transition t : state.getOutTransitions()) {
 
 				totalTimes += t.getAccessTimes();
@@ -115,6 +115,9 @@ public class CalculateSimilarity {
 				distance += Math.pow((totalTimes == 0 ? 0 : t.getAccessTimes()
 						* 1.0 / totalTimes)
 						- t.getProbability(), 2);
+				// System.out.println("≤‚ ‘¡¥«®“∆∏≈¬ -  π”√¡¥«®“∆∏≈¬ ====="
+				// + (totalTimes == 0 ? 0 : t.getAccessTimes() * 1.0
+				// / totalTimes) + "-" + t.getProbability());
 			}
 		}
 		return Math.sqrt(distance);
