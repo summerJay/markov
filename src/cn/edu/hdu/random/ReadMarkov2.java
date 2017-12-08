@@ -35,10 +35,10 @@ public class ReadMarkov2 {
 		SAXReader reader = new SAXReader();
 		// Document dom = reader.read("telephone_extend_2.xml");
 		// Document dom = reader.read("EADemo.xml");
-		Document dom = reader.read("EATimeDemo_TimeExtend.xml");
+		// Document dom = reader.read("EATimeDemo_TimeExtend.xml");
 
-		// Document dom = reader.read("VioletTimeDemo_TimeExtend.xml");
-		// Document dom = reader.read("NewMarkov.xml");
+		Document dom = reader.read("VioletTimeDemo_TimeExtend.xml");
+		// Document dom = reader.read("VioletDemo.xml");
 		// Document dom = reader.read("Software_MarkovChainModel1.xml");
 		// Document dom = reader.read("su3.xml");
 		return dom;
